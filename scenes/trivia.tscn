@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://njq3tgyopb53"]
+
+[ext_resource type="Script" path="res://scripts/trivia.gd" id="1_53x8n"]
+[ext_resource type="PackedScene" uid="uid://cxg0cvb7ol5i3" path="res://scenes/trivia_board.tscn" id="2_ra1vt"]
+
+[node name="Trivia" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_53x8n")
+
+[node name="TriviaBoard" parent="." instance=ExtResource("2_ra1vt")]
+layout_mode = 1
+
+[connection signal="answered" from="TriviaBoard" to="." method="_on_trivia_board_answered"]

@@ -1,0 +1,233 @@
+[
+	{
+		"question": "sample question text",
+		"subject": "general",
+		"difficulty": 1,
+		"options": {
+			"option1": -1,
+			"option2": 1,
+			"option3": 0,
+			"option4": 0
+		}
+	},
+	{
+		"question": "The Kuleshov effect describes which phenomenon?",
+		"subject": "general",
+		"difficulty": 3,
+		"options": {
+			"Viewers derive more meaning from the relationship between sequential shots than just one in isolation": 1,
+			"Viewers are more influenced by color than narrative": 0,
+			"It’s easier to follow non-linear storylines": 0,
+			"People respond more strongly to loud audio cues than visuals": 0
+		}
+	},
+	{
+		"question": "What game studio produced ‘Angry Birds'?",
+		"subject": "general",
+		"difficulty": 1,
+		"options": {
+			"Rovio": 1,
+			"King": 0,
+			"Supercell": 0,
+			"Zynga": 0
+		}
+	},
+	{
+		"question": "What is hippopotomonstroses-quippedaliophobia?",
+		"subject": "general",
+		"difficulty": 2,
+		"options": {
+			"Fear of long words": 1,
+			"Fear of water": 0,
+			"Fear of large animals": 0,
+			"Fear of speaking in public": 0
+		}
+	},
+	{
+		"question": "What is unique about the number 2?",
+		"subject": "general",
+		"difficulty": 1,
+		"options": {
+			"It's the only even prime number": 1,
+			"It’s the only number with no factors": 0,
+			"It’s both a square and a cube": 0,
+			"It’s the only number divisible by zero": 0
+		}
+	},
+	{
+		"question": "Which compound is responsible for blue-coloured plants?",
+		"subject": "general",
+		"difficulty": 3,
+		"options": {
+			"Anthocyanin": 1,
+			"Chlorophyll": 0,
+			"Xanthophyll": 0,
+			"Carotene": 0
+		}
+	},
+	{
+		"question": "What city was home to ‘Metamorphosis’ author Franz Kafka?",
+		"subject": "geography",
+		"difficulty": 2,
+		"options": {
+			"Prague": 1,
+			"Vienna": 0,
+			"Berlin": 0,
+			"Zurich": 0
+		}
+	},
+	{
+		"question": "Which country originated the cold marinated fish dish Ceviche?",
+		"subject": "geography",
+		"difficulty": 2,
+		"options": {
+			"Peru": 1,
+			"Mexico": 0,
+			"Spain": 0,
+			"Brazil": 0
+		}
+	},
+	{
+		"question": "What is the third largest country by area?",
+		"subject": "geography",
+		"difficulty": 2,
+		"options": {
+			"United States": 1,
+			"China": 0,
+			"Canada": 0,
+			"Brazil": 0
+		}
+	},
+	{
+		"question": "What was the first country to host the Eurovision Song Contest?",
+		"subject": "geography",
+		"difficulty": 3,
+		"options": {
+			"Switzerland": 1,
+			"United Kingdom": 0,
+			"Sweden": 0,
+			"Germany": 0
+		}
+	},
+	{
+		"question": "Which country has the highest annual rainfall on average?",
+		"subject": "geography",
+		"difficulty": 3,
+		"options": {
+			"Columbia": 1,
+			"India": 0,
+			"Indonesia": 0,
+			"Papua New Guinea": 0
+		}
+	},
+	{
+		"question": "What is the highest grossing movie of all time?",
+		"subject": "pop culture",
+		"difficulty": 1,
+		"options": {
+			"Avatar": 1,
+			"Avengers: Endgame": 0,
+			"Titanic": 0,
+			"Star Wars: The Force Awakens": 0
+		}
+	},
+	{
+		"question": "Which metal band released a song about sleep in 1991?",
+		"subject": "pop culture",
+		"difficulty": 1,
+		"options": {
+			"Metallica": 1,
+			"Slayer": 0,
+			"Iron Maiden": 0,
+			"Pantera": 0
+		}
+	},
+	{
+		"question": "Which of the following describe a piece on display at MoMa?",
+		"subject": "pop culture",
+		"difficulty": 3,
+		"options": {
+			"Nine CRT monitors on a shelf displaying black-and-white videos": 1,
+			"A typewriter fused with a rotary phone": 0,
+			"An inverted fountain pouring sand": 0,
+			"A refrigerator filled with taxidermy birds": 0
+		}
+	},
+	{
+		"question": "Which typeface featured prominently on the cover of Charli xcx’s 2024 album?",
+		"subject": "pop culture",
+		"difficulty": 3,
+		"options": {
+			"Arial": 1,
+			"Helvetica": 0,
+			"Times New Roman": 0,
+			"Futura": 0
+		}
+	},
+	{
+		"question": "Which is an effect of the fictional Bendii Syndrome?",
+		"subject": "pop culture",
+		"difficulty": 2,
+		"options": {
+			"Loss of emotional control": 1,
+			"Temporary blindness": 0,
+			"Uncontrollable telepathy": 0,
+			"Loss of memory": 0
+		}
+	},
+	{
+		"question": "In what year did the US Civil War begin?",
+		"subject": "history",
+		"difficulty": 2,
+		"options": {
+			"1861": 1,
+			"1859": 0,
+			"1863": 0,
+			"1870": 0
+		}
+	},
+	{
+		"question": "Who was Canada’s first female Prime Minister?",
+		"subject": "history",
+		"difficulty": 2,
+		"options": {
+			"Kim Campbell": 1,
+			"Margaret Thatcher": 0,
+			"Adrienne Trudeau": 0,
+			"Pauline Marois": 0
+		}
+	},
+	{
+		"question": "On days like these I curse the Chinese for which invention?",
+		"subject": "history",
+		"difficulty": 1,
+		"options": {
+			"Gunpowder": 1,
+			"Coins": 0,
+			"Vases": 0,
+			"Bow and Arrow": 0
+		}
+	},
+	{
+		"question": "Which is not a Greek God or Goddess?",
+		"subject": "history",
+		"difficulty": 2,
+		"options": {
+			"Minerva": 1,
+			"Hypnos": 0,
+			"Hermes": 0,
+			"Demeter": 0
+		}
+	},
+	{
+		"question": "Which nation was the first to abolish slavery?",
+		"subject": "history",
+		"difficulty": 3,
+		"options": {
+			"France": 1,
+			"United States": 0,
+			"Brazil": 0,
+			"United Kingdom": 0
+		}
+	}
+]
