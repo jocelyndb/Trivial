@@ -1,6 +1,6 @@
 extends Control
 		
-signal answered(int)
+signal answered(question: Question, correct: bool)
 	
 var currentQuestion: Question
 
@@ -80,4 +80,4 @@ func setMCButton(button: Button, text: String):
 func onMCPressed(answer: String):
 	print(answer)
 	print(currentQuestion.options[answer])
-	emit_signal("answered", currentQuestion.options[answer], currentQuestion.difficulty)
+	answered.emit(currentQuestion, currentQuestion.options[answer] == 1)

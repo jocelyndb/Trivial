@@ -3,6 +3,7 @@ extends Node
 class_name Question
 # Question text
 var question: String
+# TODO: change to enum
 var subject: String
 # difficulty is one of:
 #	1: easy

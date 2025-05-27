@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://njq3tgyopb53"]
+[gd_scene load_steps=4 format=3 uid="uid://njq3tgyopb53"]
 
 [ext_resource type="Script" path="res://scripts/trivia.gd" id="1_53x8n"]
 [ext_resource type="PackedScene" uid="uid://cxg0cvb7ol5i3" path="res://scenes/trivia_board.tscn" id="2_ra1vt"]
+[ext_resource type="PackedScene" uid="uid://cffyhc16ln836" path="res://scenes/upgrades_menu.tscn" id="3_1y1j8"]
 
 [node name="Trivia" type="Control"]
 layout_mode = 3
@@ -15,4 +16,31 @@ script = ExtResource("1_53x8n")
 [node name="TriviaBoard" parent="." instance=ExtResource("2_ra1vt")]
 layout_mode = 1
 
+[node name="UpgradesMenu" parent="." instance=ExtResource("3_1y1j8")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+horizontal_alignment = 2
+
+[node name="Modifiers" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="answered" from="TriviaBoard" to="." method="_on_trivia_board_answered"]
+[connection signal="modifierSelected" from="UpgradesMenu" to="." method="modifier_selected"]
