@@ -114,7 +114,14 @@ func setNextQuestion() -> void:
 func modifier_selected(modifier: Modifier) -> void:
 	modifiers.append(modifier)
 	$UpgradesMenu.hide()
-	$HBoxContainer/Modifiers/Modifiers.text = $HBoxContainer/Modifiers/Modifiers.text + "\n\n" + modifier.choiceText
+	var modifierCard: Button = Button.new()
+	modifierCard.autowrap_mode = TextServer.AUTOWRAP_WORD
+	modifierCard.disabled = true
+	modifierCard.text = modifier.choiceText
+	modifierCard.add_theme_font_size_override("font_size", 32)
+	$HBoxContainer/Modifiers.add_child(modifierCard)
+	
+	#$HBoxContainer/Modifiers/Modifiers.text = $HBoxContainer/Modifiers/Modifiers.text + "\n\n" + modifier.choiceText
 	#for m in modifiers:
 		#print(m.choiceText)
 	setNextQuestion()

@@ -68,8 +68,8 @@ func ifCorrectMultIfIncorrectNegative() -> void:
 func ifIncorrectMult() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		multiplier = 0
-		return correct
-	streakIncrease = [-1,-2,-1.5].pick_random()
+		return not correct
+	streakIncrease = -1.0 * [1.0,2.0,1.5].pick_random()
 	choiceText = "Multiply score by -%.2f if your answer is incorrect" % multiplier
 
 func multRandom() -> void:

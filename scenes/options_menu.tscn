@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://drhsvebvknql8"]
+[gd_scene load_steps=8 format=3 uid="uid://drhsvebvknql8"]
 
 [ext_resource type="Script" path="res://scripts/volume_slider.gd" id="1_8045e"]
 [ext_resource type="PackedScene" uid="uid://bovjr85fwn77x" path="res://scenes/scene_button.tscn" id="1_ko2s8"]
 [ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_vv0n5"]
+[ext_resource type="PackedScene" uid="uid://cmgimm5h6ym7k" path="res://scenes/labeled_slider.tscn" id="2_7pc3j"]
 [ext_resource type="Script" path="res://scenes/info_label.gd" id="3_xpllv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k7vfr"]
@@ -43,6 +44,11 @@ offset_bottom = -200.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 50
+
+[node name="Vol" parent="VBoxContainer" instance=ExtResource("2_7pc3j")]
+layout_mode = 2
+text = "Music"
+audioBusName = "Music"
 
 [node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2

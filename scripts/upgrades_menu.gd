@@ -25,19 +25,20 @@ func generateUpgrades() -> void:
 			child.queue_free()
 	for i in 3:
 		print("Generating upgrade")
-		var testLabel = Button.new()
-		testLabel.autowrap_mode = TextServer.AUTOWRAP_WORD
-		testLabel.custom_minimum_size.x = 400
+		var upgradeButton = Button.new()
+		upgradeButton.autowrap_mode = TextServer.AUTOWRAP_WORD
+		upgradeButton.custom_minimum_size.x = 500
+		upgradeButton.custom_minimum_size.y = 400
 		var modifier: Modifier = generateModifier()
-		testLabel.add_child(modifier)
+		upgradeButton.add_child(modifier)
 		print(modifier.choiceText)
-		testLabel.text = modifier.choiceText
-		testLabel.pressed.connect(
+		upgradeButton.text = modifier.choiceText
+		upgradeButton.pressed.connect(
 			func ():
-				testLabel.remove_child(modifier)
+				upgradeButton.remove_child(modifier)
 				modifierSelected.emit(modifier)
 				)
-		add_child(testLabel)
+		add_child(upgradeButton)
 	print("Generated all upgrades")
 		
 func generateModifier() -> Modifier:
