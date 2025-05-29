@@ -1,0 +1,52 @@
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://c8yoiu12pcmvw"]
+
+[ext_resource type="FontVariation" uid="uid://ckuhcockq3tcl" path="res://resources/theme/bold_font.tres" id="1_ty0rm"]
+[ext_resource type="StyleBox" uid="uid://cqmin5tw3ahkv" path="res://resources/theme/buttons/box_style.tres" id="2_0rcmk"]
+[ext_resource type="StyleBox" uid="uid://dusmws5g3coka" path="res://resources/theme/buttons/box_style_hover.tres" id="2_rqihi"]
+[ext_resource type="StyleBox" uid="uid://day5by2ylnbh2" path="res://resources/theme/buttons/box_style_pressed.tres" id="4_cwbog"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0sevs"]
+content_margin_left = 30.0
+content_margin_top = 10.0
+content_margin_right = 30.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ogila"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tim5j"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_5c6gd"]
+mesh = SubResource("ArrayMesh_tim5j")
+image_size = Vector2(460, 130)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_35cd0"]
+texture = SubResource("MeshTexture_5c6gd")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t2c5c"]
+
+[resource]
+AnswerButton/base_type = &"Button"
+AnswerButton/font_sizes/font_size = 48
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_ty0rm")
+Button/styles/disabled = SubResource("StyleBoxFlat_0sevs")
+Button/styles/focus = SubResource("StyleBoxEmpty_ogila")
+Button/styles/hover = ExtResource("2_rqihi")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_35cd0")
+Button/styles/normal = ExtResource("2_0rcmk")
+Button/styles/pressed = ExtResource("4_cwbog")
+GridContainer/constants/h_separation = 30
+GridContainer/constants/v_separation = 30
+HBoxContainer/constants/separation = 16
+HSeparator/constants/separation = 32
+HSeparator/styles/separator = SubResource("StyleBoxEmpty_t2c5c")
+Label/font_sizes/font_size = 56
+Label/fonts/font = ExtResource("1_ty0rm")
+LinkButton/colors/font_hover_color = Color(0, 0.994217, 0.761689, 1)
+LinkButton/font_sizes/font_size = 32
+MarginContainer/constants/margin_bottom = 20
+MarginContainer/constants/margin_left = 20
+MarginContainer/constants/margin_right = 20
+MarginContainer/constants/margin_top = 20
+OverlayMenu/base_type = &"HBoxContainer"
+RichTextLabel/font_sizes/normal_font_size = 148

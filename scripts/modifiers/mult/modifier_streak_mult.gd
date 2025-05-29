@@ -4,7 +4,7 @@ extends ModifierMult
 class_name ModifierStreakMult
 
 @export var streakCondition: Callable
-@export var streakIncrease: int
+@export var streakIncrease: float
 
 # Array of callables for functions that initialize every
 # possible type of streak mult modifier
@@ -38,45 +38,45 @@ func modifyScoreWithContext(score: int, correct: bool, difficulty: int, subject:
 func correctStreakMult() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		return correct
-	streakIncrease = randi_range(1, 15) * 10
-	choiceText = "x%d x your current correct answer streak" % streakIncrease
+	streakIncrease = float(randi_range(1.0,3.0)) / 10.0
+	choiceText = "Multiply score by 1 + %.2f for every correct answer, resets after incorrect answer" % streakIncrease
 	
 func incorrectStreakMult() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		return not correct
-	streakIncrease = randi_range(-1, -4) * 10
-	choiceText = "x%d x your incorrect answer streak" % streakIncrease
+	streakIncrease = 0.1
+	choiceText = "Multiply score by 1 + %.2f for every incorrect answer, resets after correct answer" % streakIncrease
 	
 func ifCorrectMult() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		multiplier = 0
 		return correct
-	streakIncrease = randf_range(8, 15)
-	choiceText = "x%d if your answer is correct" % streakIncrease
+	streakIncrease = [2,2.5,3].pick_random()
+	choiceText = "Multiply score by %.2f if your answer is correct" % streakIncrease
 
 func ifCorrectMultIfIncorrectNegative() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
-		multiplier = 0
 		streakIncrease = absi(streakIncrease)
-		if not correct:
-			streakIncrease = -streakIncrease
+		multiplier = 0
+		if correct: streakIncrease = 1 + streakIncrease
+		else: streakIncrease = 1 - streakIncrease
 		return true
-	streakIncrease = randf_range(20, 25)
-	choiceText = "x%d if your answer is correct" % streakIncrease
+	streakIncrease = 0.2
+	choiceText = "Multiply score by %.2f if correct, by %.2f if incorrect" % [1.0 + streakIncrease, 1.0 - streakIncrease]
 
 
 func ifIncorrectMult() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		multiplier = 0
 		return correct
-	streakIncrease = [-10, -1, 2, 4, 5].pick_random()
-	choiceText = "x%d if your answer is incorrect" % multiplier
+	streakIncrease = [-1,-2,-1.5].pick_random()
+	choiceText = "Multiply score by -%.2f if your answer is incorrect" % multiplier
 
 func multRandom() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
-		multiplier = [-10, -1, 2, 4, 5, 8, 10, 1000].pick_random()
+		multiplier = [-10, -5, -2, -1, 1, 2, 5, 10].pick_random()
 		return true
 	streakIncrease = 0
-	choiceText = "rAnd0m##!x1000,x10,x8,x5,x4err!&###x-10,x-1"
+	choiceText = "rAnd0m##!10x,5x,2x,1x$err!&###-1x-5x-2x-10x"
 
 			

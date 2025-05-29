@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://drhsvebvknql8"]
+[gd_scene load_steps=7 format=3 uid="uid://drhsvebvknql8"]
 
 [ext_resource type="Script" path="res://scripts/volume_slider.gd" id="1_8045e"]
 [ext_resource type="PackedScene" uid="uid://bovjr85fwn77x" path="res://scenes/scene_button.tscn" id="1_ko2s8"]
+[ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_vv0n5"]
 [ext_resource type="Script" path="res://scenes/info_label.gd" id="3_xpllv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k7vfr"]
+shader = ExtResource("1_vv0n5")
+shader_parameter/spread = 4
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wkv3w"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -11,6 +18,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_k7vfr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_wkv3w")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -69,7 +88,6 @@ text = "Sounds"
 [node name="HighScore" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 script = ExtResource("3_xpllv")
-infoVariable = "highScore"
 labelText = "High Score: "
 
 [node name="NavButtons" type="HBoxContainer" parent="VBoxContainer"]

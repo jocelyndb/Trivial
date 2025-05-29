@@ -1,27 +1,5 @@
 [
 	{
-		"question": "sample question text",
-		"subject": "general",
-		"difficulty": 1,
-		"options": {
-			"option1": -1,
-			"option2": 1,
-			"option3": 0,
-			"option4": 0
-		}
-	},
-	{
-		"question": "The Kuleshov effect describes which phenomenon?",
-		"subject": "general",
-		"difficulty": 3,
-		"options": {
-			"Viewers derive more meaning from the relationship between sequential shots than just one in isolation": 1,
-			"Viewers are more influenced by color than narrative": 0,
-			"It’s easier to follow non-linear storylines": 0,
-			"People respond more strongly to loud audio cues than visuals": 0
-		}
-	},
-	{
 		"question": "What game studio produced ‘Angry Birds'?",
 		"subject": "general",
 		"difficulty": 1,

@@ -1,15 +1,22 @@
 extends Control
 
 @export var questionsPath = "res://resources/questions.json"
-@onready var questions: Array[Question] = loadQuestions()
+@export var roundsBetweenModifiers: int = 3
+@export var totalRounds: int = 12
+@export var goal: int = 3500
 
-var currentQuestionIndex: int = -1
+@onready var questions: Array[Question] = loadQuestions()
+@onready var QuestionRequest: HTTPRequest = $QuestionRequest
+
+#var currentQuestionIndex: int = -1
 var modifiers: Array[Modifier] = []
 var currentScore: int = 0 
+var currentRound: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	questions.shuffle()
+	displayRoundInfo(0)
+	
 	#var questions: Array[Question] = loadQuestions()
 	#$TriviaBoard.setQuestion(questions[1])
 	#$TriviaBoard.setQuestion(questions[2])
@@ -45,14 +52,36 @@ func loadQuestions() -> Array[Question]:
 	#save_file.store_line(json_string)
 	#save_file.close()
 
+func displayText(text: String):
+	print(text)
+	
+	# TODO: display on screen
+	
+func displayRoundInfo(score: int):
+	$HBoxContainer/RoundInfo/Score.text = "Score: %d/%d\nLast: %d\nRound: %d/%d" % [currentScore, goal, score, currentRound + 1, totalRounds]
+
 func calcScore(question: Question, correct: bool):
 	var score = 1 if correct else 0
+	score *= (5 + 2 * question.difficulty) * 10
+	if correct:
+		print()
 	score = applyModifiers(score, question, correct)
 	score *= question.difficulty
 	print(score)
 	currentScore += score
-	$Score.text = "Current score: %d, Last scored: %d" % [currentScore, score]
-	presentModifierOptions()
+	currentRound += 1
+	displayRoundInfo(score)
+	if currentRound == totalRounds:
+		# TODO: change to score calc end of game scene
+		PlayerInfo.lastScore = currentScore
+		PlayerInfo.highScore = max(PlayerInfo.highScore, currentScore)
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	elif currentRound % roundsBetweenModifiers == 0:
+		presentModifierOptions()
+	else:
+		setNextQuestion()
+
+	
 
 func applyModifiers(score: int, question: Question, correct: bool) -> int:
 	for modifier in modifiers:
@@ -68,17 +97,24 @@ func applyModifiers(score: int, question: Question, correct: bool) -> int:
 func presentModifierOptions():
 	$UpgradesMenu.generateUpgrades()
 	$UpgradesMenu.show()
+	$HBoxContainer/TriviaBoard.process_mode = Node.PROCESS_MODE_DISABLED
 	pass
 	
 func setNextQuestion() -> void:
-	currentQuestionIndex += 1
+	#currentQuestionIndex += 1
 	# handle picking new question
-	$TriviaBoard.setQuestion(questions[currentQuestionIndex])
+	# reactivate board
+	$HBoxContainer/TriviaBoard.process_mode = Node.PROCESS_MODE_INHERIT
+	# grab new Qs in background if running low
+	if questions.size() < 6:
+		QuestionRequest.makeRequest()
+	$HBoxContainer/TriviaBoard.setQuestion(questions.pop_at(randi_range(0, questions.size()-1)))
+
 
 func modifier_selected(modifier: Modifier) -> void:
 	modifiers.append(modifier)
 	$UpgradesMenu.hide()
-	$Modifiers.text = $Modifiers.text + "\n" + modifier.choiceText
+	$HBoxContainer/Modifiers/Modifiers.text = $HBoxContainer/Modifiers/Modifiers.text + "\n\n" + modifier.choiceText
 	#for m in modifiers:
 		#print(m.choiceText)
 	setNextQuestion()

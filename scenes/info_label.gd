@@ -1,6 +1,6 @@
 extends Label
 
-@export var infoVariable: String
+@export var infoVariable: String = "highScore"
 @export var labelText: String
 
 # Called when the node enters the scene tree for the first time.

@@ -4,12 +4,12 @@ extends Modifier
 class_name ModifierAdd
 
 @export var pointAddition: int
-@export var maxPointAdditionInHundreds: int = 18
-@export var minPointAdditionInHundreds: int = 2
+@export var maxPointAdditionInTens: int = 1
+@export var minPointAdditionInTens: int = 5
 
 func _init() -> void:
-	pointAddition = 100 * randi_range(minPointAdditionInHundreds, maxPointAdditionInHundreds)
-	choiceText = "+%d points" % pointAddition
+	pointAddition = 10 * randi_range(minPointAdditionInTens, maxPointAdditionInTens)
+	choiceText = "+%d points to your score" % pointAddition
 
 func modifyScore(score: int) -> int:
 	return score + pointAddition

@@ -1,46 +1,145 @@
-[gd_scene load_steps=4 format=3 uid="uid://njq3tgyopb53"]
+[gd_scene load_steps=16 format=3 uid="uid://njq3tgyopb53"]
 
 [ext_resource type="Script" path="res://scripts/trivia.gd" id="1_53x8n"]
+[ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_ubtn2"]
 [ext_resource type="PackedScene" uid="uid://cxg0cvb7ol5i3" path="res://scenes/trivia_board.tscn" id="2_ra1vt"]
 [ext_resource type="PackedScene" uid="uid://cffyhc16ln836" path="res://scenes/upgrades_menu.tscn" id="3_1y1j8"]
+[ext_resource type="Theme" uid="uid://c8yoiu12pcmvw" path="res://resources/theme/trivial_theme.tres" id="4_njwjn"]
+[ext_resource type="Script" path="res://scripts/upgrades_bg.gd" id="5_524gb"]
+[ext_resource type="FontFile" uid="uid://byqk1v6nonddi" path="res://resources/theme/MuseoModerno[wght].ttf" id="5_u1d1h"]
+[ext_resource type="Script" path="res://scripts/questions/questions_api.gd" id="8_rcs78"]
 
-[node name="Trivia" type="Control"]
-layout_mode = 3
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mtuvu"]
+shader = ExtResource("1_ubtn2")
+shader_parameter/spread = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0ly4"]
+shader = ExtResource("1_ubtn2")
+shader_parameter/spread = 4
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ns4n6"]
+
+[sub_resource type="Gradient" id="Gradient_y7ckx"]
+offsets = PackedFloat32Array(0, 0.1, 0.9, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0.399203, 0.298542, 1, 0, 0.399203, 0.298542, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c8qkv"]
+gradient = SubResource("Gradient_y7ckx")
+
+[sub_resource type="FontVariation" id="FontVariation_dv1k1"]
+base_font = ExtResource("5_u1d1h")
+variation_opentype = {
+2003265652: 800
+}
+variation_embolden = -0.25
+
+[sub_resource type="Theme" id="Theme_4ue6d"]
+Label/fonts/font = SubResource("FontVariation_dv1k1")
+
+[node name="Trivia" type="Panel"]
+material = SubResource("ShaderMaterial_mtuvu")
+clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("4_njwjn")
 script = ExtResource("1_53x8n")
 
-[node name="TriviaBoard" parent="." instance=ExtResource("2_ra1vt")]
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_k0ly4")
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_ns4n6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="RoundInfo" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Score" type="Label" parent="HBoxContainer/RoundInfo"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TriviaBoard" parent="HBoxContainer" instance=ExtResource("2_ra1vt")]
+layout_mode = 2
+size_flags_stretch_ratio = 8.0
+
+[node name="Modifiers" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Modifiers" type="Label" parent="HBoxContainer/Modifiers"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme = ExtResource("4_njwjn")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UpgradesBG" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_c8qkv")
+script = ExtResource("5_524gb")
+
+[node name="Label" type="Label" parent="UpgradesBG"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.0
+offset_top = 44.0
+offset_right = 255.0
+offset_bottom = 134.0
+grow_horizontal = 2
+text = "Choose a modifier"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="UpgradesMenu" parent="." instance=ExtResource("3_1y1j8")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="Score" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
-horizontal_alignment = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
 
-[node name="Modifiers" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Incidental" type="Label" parent="."]
+layout_mode = 2
+offset_left = 20.0
+offset_top = 514.0
+offset_right = 1900.0
+offset_bottom = 604.0
+theme = SubResource("Theme_4ue6d")
 
-[connection signal="answered" from="TriviaBoard" to="." method="_on_trivia_board_answered"]
+[node name="QuestionRequest" type="HTTPRequest" parent="."]
+script = ExtResource("8_rcs78")
+
+[connection signal="answered" from="HBoxContainer/TriviaBoard" to="." method="_on_trivia_board_answered"]
 [connection signal="modifierSelected" from="UpgradesMenu" to="." method="modifier_selected"]
+[connection signal="visibility_changed" from="UpgradesMenu" to="UpgradesBG" method="_on_upgrades_menu_visibility_changed"]

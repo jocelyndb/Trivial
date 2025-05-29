@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3yxy0rqtoav7"]
+
+[ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_xff2d"]
+[ext_resource type="Theme" uid="uid://c8yoiu12pcmvw" path="res://resources/theme/trivial_theme.tres" id="2_ahtmm"]
+[ext_resource type="PackedScene" uid="uid://bovjr85fwn77x" path="res://scenes/scene_button.tscn" id="4_mudg1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k2pxf"]
+shader = ExtResource("1_xff2d")
+shader_parameter/spread = 4
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hg5gc"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_k2pxf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_hg5gc")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -156.0
+offset_right = 214.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TitleText" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = ExtResource("2_ahtmm")
+bbcode_enabled = true
+text = "[wave amp=20.0 freq=5.0 connected=1]Trivial"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="JocelynText" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Game by Jocelyn Baker"
+
+[node name="JocelynLink" type="LinkButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "jocelynbaker.ca"
+uri = "https://jocelynbaker.ca"
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="TDBText" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Additional Questions from PIXELTAIL GAMES LLC."
+
+[node name="TDBLink" type="LinkButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "opentdb.com"
+uri = "https://opentdb.com"
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="NavButtons" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="OptionsButton" parent="HBoxContainer/NavButtons" instance=ExtResource("4_mudg1")]
+layout_mode = 2
+text = "Back"
+targetSceneName = "options_menu"
+
+[node name="MenuButton" parent="HBoxContainer/NavButtons" instance=ExtResource("4_mudg1")]
+layout_mode = 2
+text = "Main Menu"
+targetSceneName = "main_menu"

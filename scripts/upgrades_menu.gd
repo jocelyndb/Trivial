@@ -21,13 +21,16 @@ func _ready() -> void:
 
 func generateUpgrades() -> void:
 	for child in get_children():
-		child.queue_free()
+		if child is Button:
+			child.queue_free()
 	for i in 3:
 		print("Generating upgrade")
 		var testLabel = Button.new()
+		testLabel.autowrap_mode = TextServer.AUTOWRAP_WORD
+		testLabel.custom_minimum_size.x = 400
 		var modifier: Modifier = generateModifier()
 		testLabel.add_child(modifier)
-		print(modifier)
+		print(modifier.choiceText)
 		testLabel.text = modifier.choiceText
 		testLabel.pressed.connect(
 			func ():

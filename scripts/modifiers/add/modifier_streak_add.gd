@@ -36,27 +36,27 @@ func ifCorrectAddStreak() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		return correct
 	streakIncrease = randi_range(1, 15) * 10
-	choiceText = "+%d x your correct answer streak" % streakIncrease
+	choiceText = "+%d to your score for every correct answer, resets after an incorrect answer" % streakIncrease
 	
 func ifInorrectSubtractStreak() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		return not correct
 	streakIncrease = randi_range(-1, -4) * 10
-	choiceText = "%d x your incorrect answer streak" % streakIncrease
+	choiceText = "%d to your score for every incorrect answer, resets after a correct answer" % streakIncrease
 	
 func ifCorrectAdd() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		if not correct:
 			pointAddition -= streakIncrease
 		return true
-	streakIncrease = randi_range(50, 80) * 10
-	choiceText = "+%d if your answer is correct" % streakIncrease
+	streakIncrease = randi_range(1,2) * 10
+	choiceText = "+%d to your score if your answer is correct" % streakIncrease
 
 func ifIncorrectSubtract() -> void:
 	streakCondition = func (score: int, correct: bool, difficulty: int, subject: String):
 		if correct:
 			pointAddition -= streakIncrease
 		return true
-	streakIncrease = randi_range(10, 30) * -10
-	choiceText = "%d if your answer is incorrect" % streakIncrease
+	streakIncrease = 1 * -10
+	choiceText = "%d to your score if your answer is incorrect" % streakIncrease
 		

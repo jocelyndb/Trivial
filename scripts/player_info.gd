@@ -1,3 +1,4 @@
 extends Node
 
-var highScore = 10
+var highScore: int = 0
+var lastScore: int = -1

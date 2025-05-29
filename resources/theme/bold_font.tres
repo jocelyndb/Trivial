@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://ckuhcockq3tcl"]
+
+[ext_resource type="FontFile" uid="uid://byqk1v6nonddi" path="res://resources/theme/MuseoModerno[wght].ttf" id="1_ican0"]
+
+[resource]
+base_font = ExtResource("1_ican0")
+variation_opentype = {
+2003265652: 800
+}
