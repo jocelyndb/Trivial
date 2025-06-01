@@ -25,7 +25,7 @@ func generateUpgrades() -> void:
 			child.queue_free()
 	for i in 3:
 		print("Generating upgrade")
-		var upgradeButton = Button.new()
+		var upgradeButton = SFXButton.new()
 		upgradeButton.autowrap_mode = TextServer.AUTOWRAP_WORD
 		upgradeButton.custom_minimum_size.x = 500
 		upgradeButton.custom_minimum_size.y = 400

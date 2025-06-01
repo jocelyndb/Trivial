@@ -1,7 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://njq3tgyopb53"]
 
 [ext_resource type="Script" path="res://scripts/trivia.gd" id="1_53x8n"]
-[ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_ubtn2"]
 [ext_resource type="PackedScene" uid="uid://cxg0cvb7ol5i3" path="res://scenes/trivia_board.tscn" id="2_ra1vt"]
 [ext_resource type="PackedScene" uid="uid://cffyhc16ln836" path="res://scenes/upgrades_menu.tscn" id="3_1y1j8"]
 [ext_resource type="Theme" uid="uid://c8yoiu12pcmvw" path="res://resources/theme/trivial_theme.tres" id="4_njwjn"]
@@ -9,13 +8,46 @@
 [ext_resource type="FontFile" uid="uid://byqk1v6nonddi" path="res://resources/theme/MuseoModerno[wght].ttf" id="5_u1d1h"]
 [ext_resource type="Script" path="res://scripts/questions/questions_api.gd" id="8_rcs78"]
 
+[sub_resource type="Shader" id="Shader_gjnyc"]
+code = "shader_type canvas_item;
+
+uniform float spread = 2.5;
+uniform bool correct = true;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+const vec4 buttonGreen = vec4(0, .706, .537, 1);
+const vec4 buttonRed = vec4(.706, .1, .2, 1);
+
+void fragment() {
+	//COLOR = vec4(1,0.8,1,1);
+	COLOR = correct ? buttonGreen : buttonRed;
+	COLOR.rgb *= (sin(0.5*TIME + UV.x * 18.0 * PI) + 2.0 + (cos(0.25 * TIME + UV.y * 18.0 * PI))) / 3.0;
+	COLOR *= 3.0;
+	COLOR = round(COLOR);
+	COLOR /= 3.0;
+	COLOR.rgb *= sin(pow(abs(UV.x - 0.5), spread)* 1.0 * PI);
+	COLOR.a = 1.0;
+	// Called for every pixel the material is visible on.
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mtuvu"]
-shader = ExtResource("1_ubtn2")
-shader_parameter/spread = 4
+shader = SubResource("Shader_gjnyc")
+shader_parameter/spread = 4.0
+shader_parameter/correct = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0ly4"]
-shader = ExtResource("1_ubtn2")
-shader_parameter/spread = 4
+shader = SubResource("Shader_gjnyc")
+shader_parameter/spread = 2.5
+shader_parameter/correct = true
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ns4n6"]
 
@@ -83,17 +115,17 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_stretch_ratio = 8.0
 
-[node name="Modifiers" type="VBoxContainer" parent="HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(380, 1080)
 layout_mode = 2
-size_flags_horizontal = 3
+horizontal_scroll_mode = 0
 
-[node name="Modifiers" type="Label" parent="HBoxContainer/Modifiers"]
-custom_minimum_size = Vector2(380, 0)
+[node name="Modifiers" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
-theme = ExtResource("4_njwjn")
-theme_override_font_sizes/font_size = 32
-horizontal_alignment = 1
-autowrap_mode = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+alignment = 1
 
 [node name="UpgradesBG" type="TextureRect" parent="."]
 visible = false

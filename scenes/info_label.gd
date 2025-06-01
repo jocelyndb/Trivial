@@ -1,10 +1,11 @@
+@tool
 extends Label
 
 @export var infoVariable: String = "highScore"
 @export var labelText: String
 
 # Called when the node enters the scene tree for the first time.
-func _init() -> void:
+func _ready() -> void:
 	text = labelText + str(PlayerInfo[infoVariable])
 	pass # Replace with function body.
 

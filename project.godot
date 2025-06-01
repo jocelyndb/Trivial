@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Question="res://scripts/question.gd"
 PlayerInfo="*res://scripts/player_info.gd"
+SoundManager="*res://scenes/sound_manager.tscn"
 
 [display]
 
@@ -26,6 +27,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdfxr/plugin.cfg")
 
 [gui]
 

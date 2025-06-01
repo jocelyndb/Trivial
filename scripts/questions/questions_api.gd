@@ -9,6 +9,7 @@ func _ready():
 
 func makeRequest():
 	var httpRequest = HTTPRequest.new()
+	print("Making HTTP Request")
 	add_child(httpRequest)
 	httpRequest.request_completed.connect(self.parseResponse)
 	
@@ -35,7 +36,8 @@ func parseResponse(result, response_code, headers, body):
 		var json = JSON.new()
 		json.parse(body.get_string_from_utf8())
 		var response = json.get_data()
-		print(response.results)
+		if response == null or not response.has("results"):
+			return
 		for question in response.results:
 			var options: Dictionary = {
 				question.correct_answer.uri_decode():1,

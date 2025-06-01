@@ -2,6 +2,11 @@ extends Control
 		
 signal answered(question: Question, correct: bool)
 	
+@onready var questionLabel: Label = $BoardSeparator/Top/Question
+@onready var mc_options: GridContainer = $BoardSeparator/Bottom/MCOptions
+@onready var optionButtons: Array[Node] = $BoardSeparator/Bottom/MCOptions.get_children()
+
+	
 var currentQuestion: Question
 
 # Called when the node enters the scene tree for the first time.
@@ -11,7 +16,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	# TODO: remove when finished testing question setting
 	if (Input.is_action_just_pressed("ui_select")):
 		print("Setting question")
 		setQuestion(Question.newQuestion(
@@ -26,16 +30,15 @@ func _process(delta: float) -> void:
 				"Fifth choice, disabled incorrect":-2,
 				#"Sixth choice, incorrect":0 
 			}))
-	
 	pass
 	
 func setQuestion(question: Question) -> void:
 	currentQuestion = question
 	# Disconnect all existing button signals
-	for button in $BoardSeparator/Bottom/MCOptions.get_children():
+	for button in optionButtons:
 		button.disconnect("pressed", onMCPressed)
-	$BoardSeparator/Top/Question.text = question.question
-	var optionButtons: Array[Node] = $BoardSeparator/Bottom/MCOptions.get_children()
+	questionLabel.text = question.question
+	#var optionButtons: Array[Node] = $BoardSeparator/Bottom/MCOptions.get_children()
 	optionButtons.shuffle()
 	# Check for an enabled correct answer option
 	var correctOptionIndex: int = question.options.values().find(1)
@@ -54,7 +57,6 @@ func setQuestion(question: Question) -> void:
 		# End if reached already set last button
 		if buttonIndex == finalButtonIndex:
 			break
-		# TODO: handle disa
 		setMCButton(optionButtons[buttonIndex], question.options.keys()[optionIndex])
 		print("Set button: %d" % buttonIndex)
 		optionIndex += 1

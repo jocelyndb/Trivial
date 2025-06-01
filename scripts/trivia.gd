@@ -1,30 +1,30 @@
 extends Control
 
 @export var questionsPath = "res://resources/questions.json"
-@export var roundsBetweenModifiers: int = 3
-@export var totalRounds: int = 12
-@export var goal: int = 3500
+@export var questionsBetweenModifiers: int = 3
+#@export var totalRounds: int = 12
+@export var goals: Array[int] = [150, 300, 500, 1000, 2000, 5000, 8000]
 
 @onready var questions: Array[Question] = loadQuestions()
 @onready var QuestionRequest: HTTPRequest = $QuestionRequest
+@onready var upgrades_menu: HBoxContainer = $UpgradesMenu
+@onready var trivia_board: MarginContainer = $HBoxContainer/TriviaBoard
+@onready var score_label: Label = $HBoxContainer/RoundInfo/Score
+@onready var modifiers_container: VBoxContainer = $HBoxContainer/ScrollContainer/Modifiers
+@onready var background: TextureRect = $Background
 
 #var currentQuestionIndex: int = -1
 var modifiers: Array[Modifier] = []
 var currentScore: int = 0 
+var roundScore: int = 0
 var currentRound: int = 0
+var answeredThisRound = 0
+var roundGoal: int = goals[0]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	displayRoundInfo(0)
-	
-	#var questions: Array[Question] = loadQuestions()
-	#$TriviaBoard.setQuestion(questions[1])
-	#$TriviaBoard.setQuestion(questions[2])
 	setNextQuestion()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func loadQuestions() -> Array[Question]:
 	if not FileAccess.file_exists(questionsPath):
@@ -58,7 +58,16 @@ func displayText(text: String):
 	# TODO: display on screen
 	
 func displayRoundInfo(score: int):
-	$HBoxContainer/RoundInfo/Score.text = "Score: %d/%d\nLast: %d\nRound: %d/%d" % [currentScore, goal, score, currentRound + 1, totalRounds]
+	score_label.text = "Round %d
+		%d/%d
+		Question %d/%d" % [
+			currentRound + 1, 
+			roundScore, 
+			roundGoal, 
+			answeredThisRound + 1, 
+			questionsBetweenModifiers, 
+			#score,
+		]
 
 func calcScore(question: Question, correct: bool):
 	var score = 1 if correct else 0
@@ -69,19 +78,30 @@ func calcScore(question: Question, correct: bool):
 	score *= question.difficulty
 	print(score)
 	currentScore += score
-	currentRound += 1
+	roundScore += score
+	answeredThisRound += 1
+	# Handle moving to next question/round
+	if answeredThisRound == questionsBetweenModifiers:
+		endOfRound()
 	displayRoundInfo(score)
-	if currentRound == totalRounds:
-		# TODO: change to score calc end of game scene
-		PlayerInfo.lastScore = currentScore
-		PlayerInfo.highScore = max(PlayerInfo.highScore, currentScore)
-		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-	elif currentRound % roundsBetweenModifiers == 0:
+	setNextQuestion()
+
+func endOfRound() -> void:
+	PlayerInfo.lastScore = currentScore
+	PlayerInfo.highScore = max(PlayerInfo.highScore, currentScore)
+	PlayerInfo.highestRound = max(PlayerInfo.highestRound, currentRound + 1)
+	PlayerInfo.save_data()
+	if roundScore >= roundGoal:
+		currentRound += 1
+		roundScore = 0
+		answeredThisRound = 0
+		if currentRound >= goals.size():
+			roundGoal = goals.back()
+		else:
+			roundGoal = goals[currentRound]
 		presentModifierOptions()
 	else:
-		setNextQuestion()
-
-	
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func applyModifiers(score: int, question: Question, correct: bool) -> int:
 	for modifier in modifiers:
@@ -95,31 +115,37 @@ func applyModifiers(score: int, question: Question, correct: bool) -> int:
 	return score
 	
 func presentModifierOptions():
-	$UpgradesMenu.generateUpgrades()
-	$UpgradesMenu.show()
-	$HBoxContainer/TriviaBoard.process_mode = Node.PROCESS_MODE_DISABLED
-	pass
+	trivia_board.process_mode = Node.PROCESS_MODE_DISABLED
+	upgrades_menu.generateUpgrades()
+	upgrades_menu.show()
 	
 func setNextQuestion() -> void:
-	#currentQuestionIndex += 1
-	# handle picking new question
-	# reactivate board
-	$HBoxContainer/TriviaBoard.process_mode = Node.PROCESS_MODE_INHERIT
 	# grab new Qs in background if running low
 	if questions.size() < 6:
 		QuestionRequest.makeRequest()
-	$HBoxContainer/TriviaBoard.setQuestion(questions.pop_at(randi_range(0, questions.size()-1)))
+	if questions.size() <= 1:
+		roundScore = 0
+		endOfRound()
+	# handle pick new question
+	trivia_board.setQuestion(questions.pop_at(randi_range(0, questions.size()-1)))
 
 
 func modifier_selected(modifier: Modifier) -> void:
 	modifiers.append(modifier)
-	$UpgradesMenu.hide()
-	var modifierCard: Button = Button.new()
+	
+	# Hide upgrades menu and reactivate questions
+	upgrades_menu.hide()
+	trivia_board.process_mode = Node.PROCESS_MODE_INHERIT
+	var modifierCard: Button = SFXButton.new()
 	modifierCard.autowrap_mode = TextServer.AUTOWRAP_WORD
 	modifierCard.disabled = true
 	modifierCard.text = modifier.choiceText
+	#modifierCard.set_anchors_preset(PRESET_CENTER)
+	modifierCard.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	#modifierCard.horizontal_alignhorizontal_alignment
 	modifierCard.add_theme_font_size_override("font_size", 32)
-	$HBoxContainer/Modifiers.add_child(modifierCard)
+	modifiers_container.add_child(modifierCard)
+	
 	
 	#$HBoxContainer/Modifiers/Modifiers.text = $HBoxContainer/Modifiers/Modifiers.text + "\n\n" + modifier.choiceText
 	#for m in modifiers:
@@ -133,5 +159,10 @@ func _on_trivia_board_answered(question: Question, correct: bool) -> void:
 	print(("Correctly" if correct else "Incorrectly") + " answered "
 		+ ("easy" if question.difficulty == 1 else ("medium" if question.difficulty == 2 else "hard"))
 		+ " question.")
+	background.material.set_shader_parameter(&"correct", correct)
+	if correct:
+		SoundManager.playCorrect()
+	else:
+		SoundManager.playIncorrect()
 	calcScore(question, correct)
 	pass # Replace with function body.

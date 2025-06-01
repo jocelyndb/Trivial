@@ -6,7 +6,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k2pxf"]
 shader = ExtResource("1_xff2d")
-shader_parameter/spread = 4
+shader_parameter/spread = 2.5
+shader_parameter/correct = true
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hg5gc"]
 

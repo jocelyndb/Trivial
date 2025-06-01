@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://drhsvebvknql8"]
+[gd_scene load_steps=7 format=3 uid="uid://drhsvebvknql8"]
 
-[ext_resource type="Script" path="res://scripts/volume_slider.gd" id="1_8045e"]
 [ext_resource type="PackedScene" uid="uid://bovjr85fwn77x" path="res://scenes/scene_button.tscn" id="1_ko2s8"]
 [ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_vv0n5"]
 [ext_resource type="PackedScene" uid="uid://cmgimm5h6ym7k" path="res://scenes/labeled_slider.tscn" id="2_7pc3j"]
@@ -8,7 +7,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k7vfr"]
 shader = ExtResource("1_vv0n5")
-shader_parameter/spread = 4
+shader_parameter/spread = 2.5
+shader_parameter/correct = true
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wkv3w"]
 
@@ -45,56 +45,30 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 50
 
-[node name="Vol" parent="VBoxContainer" instance=ExtResource("2_7pc3j")]
+[node name="VolumeSlider" parent="VBoxContainer" instance=ExtResource("2_7pc3j")]
 layout_mode = 2
-text = "Music"
-audioBusName = "Music"
-
-[node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
-layout_mode = 2
-max_value = 1.0
-step = 0.01
-script = ExtResource("1_8045e")
-
-[node name="Label" type="Label" parent="VBoxContainer/VolumeSlider"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 59.0
-offset_bottom = 43.0
 text = "Volume"
 
-[node name="MusicSlider" type="HSlider" parent="VBoxContainer"]
+[node name="MusicSlider" parent="VBoxContainer" instance=ExtResource("2_7pc3j")]
 layout_mode = 2
-max_value = 1.0
-step = 0.01
-script = ExtResource("1_8045e")
 audioBusName = "Music"
-
-[node name="Label" type="Label" parent="VBoxContainer/MusicSlider"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 59.0
-offset_bottom = 43.0
 text = "Music"
 
-[node name="SFXSlider" type="HSlider" parent="VBoxContainer"]
+[node name="SFXSlider" parent="VBoxContainer" instance=ExtResource("2_7pc3j")]
 layout_mode = 2
-max_value = 1.0
-step = 0.01
-script = ExtResource("1_8045e")
 audioBusName = "SFX"
-
-[node name="Label" type="Label" parent="VBoxContainer/SFXSlider"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 59.0
-offset_bottom = 43.0
-text = "Sounds"
+text = "SFX"
 
 [node name="HighScore" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 script = ExtResource("3_xpllv")
 labelText = "High Score: "
+
+[node name="HighScore2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_xpllv")
+infoVariable = "highestRound"
+labelText = "Furthest Round: "
 
 [node name="NavButtons" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

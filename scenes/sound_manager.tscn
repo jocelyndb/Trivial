@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://b78oiw4jcahpu"]
+
+[ext_resource type="Script" path="res://scripts/sound_manager.gd" id="1_tbhwu"]
+[ext_resource type="AudioStream" uid="uid://d1xaauhuueiku" path="res://resources/audio/hover.wav" id="2_sl3ti"]
+[ext_resource type="AudioStream" uid="uid://i454ivo5di5u" path="res://resources/audio/press.wav" id="3_mcd3f"]
+[ext_resource type="AudioStream" uid="uid://p5iayc3wvyym" path="res://resources/audio/correct.wav" id="4_oxnka"]
+[ext_resource type="AudioStream" uid="uid://borbu5cgcl54h" path="res://resources/audio/incorrect.wav" id="5_0eff2"]
+[ext_resource type="AudioStream" uid="uid://sv7kuyd1s2yf" path="res://resources/audio/nostalgic-bossa.mp3" id="6_frf7x"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_tbhwu")
+
+[node name="hover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_sl3ti")
+bus = &"SFX"
+
+[node name="press" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mcd3f")
+bus = &"SFX"
+
+[node name="correct" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_oxnka")
+volume_db = -13.0
+bus = &"SFX"
+
+[node name="incorrect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0eff2")
+volume_db = -13.0
+bus = &"SFX"
+
+[node name="bgmusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_frf7x")
+volume_db = -15.352
+autoplay = true
+bus = &"Music"
+
+[connection signal="finished" from="bgmusic" to="." method="_on_bgmusic_finished"]
