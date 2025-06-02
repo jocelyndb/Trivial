@@ -85,7 +85,23 @@ uri = "https://opentdb.com"
 [node name="HSeparator2" type="HSeparator" parent="HBoxContainer"]
 layout_mode = 2
 
+[node name="MusicText" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Music by Christian Larssen"
+
+[node name="MusicLink" type="LinkButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "License: 
+WWKT3EATGQMKSW8B"
+text = "uppbeat.io"
+uri = "https://uppbeat.io/t/christian-larssen/nostalgic-bossa"
+
 [node name="HSeparator3" type="HSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="HBoxContainer"]
 layout_mode = 2
 
 [node name="NavButtons" type="HBoxContainer" parent="HBoxContainer"]

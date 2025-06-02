@@ -14,7 +14,7 @@ func makeRequest():
 	httpRequest.request_completed.connect(self.parseResponse)
 	
 	# GET request to OTDB endpoint
-	var error = httpRequest.request("https://opentdb.com/api.php?amount=12&type=multiple&encode=url3986")
+	var error = httpRequest.request("https://opentdb.com/api.php?amount=12&type=multiple&encode=url3986&difficulty=easy")
 	#var error = httpRequest.request("https://httpbin.org/get")
 	printt("Error", error)
 	if error != OK:

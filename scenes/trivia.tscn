@@ -1,12 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://njq3tgyopb53"]
+[gd_scene load_steps=19 format=3 uid="uid://njq3tgyopb53"]
 
 [ext_resource type="Script" path="res://scripts/trivia.gd" id="1_53x8n"]
 [ext_resource type="PackedScene" uid="uid://cxg0cvb7ol5i3" path="res://scenes/trivia_board.tscn" id="2_ra1vt"]
 [ext_resource type="PackedScene" uid="uid://cffyhc16ln836" path="res://scenes/upgrades_menu.tscn" id="3_1y1j8"]
+[ext_resource type="Script" path="res://scripts/sfx_button.gd" id="3_jcet4"]
 [ext_resource type="Theme" uid="uid://c8yoiu12pcmvw" path="res://resources/theme/trivial_theme.tres" id="4_njwjn"]
 [ext_resource type="Script" path="res://scripts/upgrades_bg.gd" id="5_524gb"]
 [ext_resource type="FontFile" uid="uid://byqk1v6nonddi" path="res://resources/theme/MuseoModerno[wght].ttf" id="5_u1d1h"]
+[ext_resource type="PackedScene" uid="uid://4jwnqk4jp4ds" path="res://scenes/spiral.tscn" id="8_3368g"]
 [ext_resource type="Script" path="res://scripts/questions/questions_api.gd" id="8_rcs78"]
+[ext_resource type="PackedScene" uid="uid://cxt2avd3dt5n2" path="res://scenes/pause_menu.tscn" id="9_t0mct"]
 
 [sub_resource type="Shader" id="Shader_gjnyc"]
 code = "shader_type canvas_item;
@@ -101,8 +104,10 @@ grow_vertical = 2
 alignment = 1
 
 [node name="RoundInfo" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(380, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+alignment = 1
 
 [node name="Score" type="Label" parent="HBoxContainer/RoundInfo"]
 custom_minimum_size = Vector2(380, 0)
@@ -110,6 +115,17 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/RoundInfo"]
+layout_mode = 2
+
+[node name="PauseButton" type="Button" parent="HBoxContainer/RoundInfo"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Options"
+script = ExtResource("3_jcet4")
 
 [node name="TriviaBoard" parent="HBoxContainer" instance=ExtResource("2_ra1vt")]
 layout_mode = 2
@@ -172,6 +188,15 @@ theme = SubResource("Theme_4ue6d")
 [node name="QuestionRequest" type="HTTPRequest" parent="."]
 script = ExtResource("8_rcs78")
 
+[node name="PauseMenu" parent="." instance=ExtResource("9_t0mct")]
+visible = false
+layout_mode = 1
+
+[node name="Spiral" parent="." instance=ExtResource("8_3368g")]
+layout_mode = 1
+
+[connection signal="pressed" from="HBoxContainer/RoundInfo/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="answered" from="HBoxContainer/TriviaBoard" to="." method="_on_trivia_board_answered"]
 [connection signal="modifierSelected" from="UpgradesMenu" to="." method="modifier_selected"]
 [connection signal="visibility_changed" from="UpgradesMenu" to="UpgradesBG" method="_on_upgrades_menu_visibility_changed"]
+[connection signal="unpause" from="PauseMenu" to="." method="_on_pause_menu_unpause"]

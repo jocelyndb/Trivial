@@ -12,6 +12,9 @@ extends Control
 @onready var score_label: Label = $HBoxContainer/RoundInfo/Score
 @onready var modifiers_container: VBoxContainer = $HBoxContainer/ScrollContainer/Modifiers
 @onready var background: TextureRect = $Background
+@onready var spiral: TextureRect = $Spiral
+@onready var pause_menu: Control = $PauseMenu
+@onready var pause_button: SFXButton = $HBoxContainer/RoundInfo/PauseButton
 
 #var currentQuestionIndex: int = -1
 var modifiers: Array[Modifier] = []
@@ -70,8 +73,9 @@ func displayRoundInfo(score: int):
 		]
 
 func calcScore(question: Question, correct: bool):
-	var score = 1 if correct else 0
-	score *= (5 + 2 * question.difficulty) * 10
+	#var score = 1 if correct else 0
+	#score *= (5 + 2 * question.difficulty) * 10
+	var score = 100 if correct else 20
 	if correct:
 		print()
 	score = applyModifiers(score, question, correct)
@@ -145,24 +149,25 @@ func modifier_selected(modifier: Modifier) -> void:
 	#modifierCard.horizontal_alignhorizontal_alignment
 	modifierCard.add_theme_font_size_override("font_size", 32)
 	modifiers_container.add_child(modifierCard)
-	
-	
-	#$HBoxContainer/Modifiers/Modifiers.text = $HBoxContainer/Modifiers/Modifiers.text + "\n\n" + modifier.choiceText
-	#for m in modifiers:
-		#print(m.choiceText)
-	setNextQuestion()
-	pass # Replace with function body.
-
 
 # TODO: change to take in a question
 func _on_trivia_board_answered(question: Question, correct: bool) -> void:
 	print(("Correctly" if correct else "Incorrectly") + " answered "
 		+ ("easy" if question.difficulty == 1 else ("medium" if question.difficulty == 2 else "hard"))
 		+ " question.")
-	background.material.set_shader_parameter(&"correct", correct)
 	if correct:
+		spiral.correct(1.)
 		SoundManager.playCorrect()
 	else:
+		spiral.incorrect(1.)
 		SoundManager.playIncorrect()
+	await get_tree().create_timer(0.75).timeout
+	background.material.set_shader_parameter(&"correct", correct)
 	calcScore(question, correct)
 	pass # Replace with function body.
+
+func _on_pause_menu_unpause() -> void:
+	pause_menu.hide()
+
+func _on_pause_button_pressed() -> void:
+	pause_menu.show()

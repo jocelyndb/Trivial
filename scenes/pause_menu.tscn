@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxt2avd3dt5n2"]
+[gd_scene load_steps=9 format=3 uid="uid://cxt2avd3dt5n2"]
 
 [ext_resource type="Shader" path="res://resources/theme/shaders/trivia_bg.gdshader" id="1_jjasd"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_sn18c"]
 [ext_resource type="PackedScene" uid="uid://cmgimm5h6ym7k" path="res://scenes/labeled_slider.tscn" id="2_ny750"]
 [ext_resource type="Script" path="res://scenes/info_label.gd" id="3_g20ma"]
 [ext_resource type="PackedScene" uid="uid://bovjr85fwn77x" path="res://scenes/scene_button.tscn" id="4_cevme"]
+[ext_resource type="Script" path="res://scripts/sfx_button.gd" id="4_y7a7m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k7vfr"]
 shader = ExtResource("1_jjasd")
@@ -12,13 +14,14 @@ shader_parameter/correct = true
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wkv3w"]
 
-[node name="Options" type="Control"]
+[node name="Pause" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_sn18c")
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_k7vfr")
@@ -70,12 +73,20 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 20
 
-[node name="MainMenuButton" parent="VBoxContainer/NavButtons" instance=ExtResource("4_cevme")]
+[node name="Resume" type="Button" parent="VBoxContainer/NavButtons"]
 layout_mode = 2
-text = "Back"
-targetSceneName = "main_menu"
+text = "Resume"
+script = ExtResource("4_y7a7m")
 
 [node name="CreditsButton" parent="VBoxContainer/NavButtons" instance=ExtResource("4_cevme")]
 layout_mode = 2
-text = "Credits"
-targetSceneName = "credits"
+text = "Restart"
+targetSceneName = "trivia"
+
+[node name="MainMenuButton" parent="VBoxContainer/NavButtons" instance=ExtResource("4_cevme")]
+layout_mode = 2
+text = "Quit to Menu"
+targetSceneName = "main_menu"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="VBoxContainer/NavButtons/Resume" to="." method="_on_resume_pressed"]
